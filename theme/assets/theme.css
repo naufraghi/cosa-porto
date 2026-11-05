@@ -387,6 +387,388 @@ color: %color:On Primary Container%;
   margin-bottom: 0;
 }
 
+/* Shared dinner signup */
+.dinner-app {
+  min-height: 100vh;
+  padding: 38px 22px 20px;
+  color: #24372f;
+  background: #f4f1e9;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.dinner-shell {
+  width: min(1160px, 100%);
+  margin: 0 auto;
+}
+
+.dinner-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 42px 52px 38px;
+  border-radius: 22px;
+  color: #f8f5eb;
+  background: #29483d;
+  box-shadow: 0 16px 38px rgba(38, 54, 44, .12);
+}
+
+.dinner-eyebrow,
+.section-kicker,
+.dinner-footer > span:first-child {
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.dinner-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #d5c99e;
+}
+
+.eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e4ad76;
+}
+
+.dinner-hero h1 {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin: 17px 0 12px;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 610px;
+  margin: 0;
+  color: #e1e6dc;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.hero-note {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 23px;
+  padding: 9px 13px;
+  border: 1px solid rgba(244, 241, 233, .22);
+  border-radius: 999px;
+  color: #f2ead5;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.hero-divider { color: #d3b27e; }
+
+.hero-sun {
+  position: absolute;
+  top: -124px;
+  right: 60px;
+  width: 340px;
+  height: 340px;
+  border: 1px solid rgba(239, 219, 168, .14);
+  border-radius: 50%;
+}
+
+.hero-sun::before,
+.hero-sun::after {
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(239, 219, 168, .12);
+  border-radius: 50%;
+  content: '';
+}
+
+.hero-sun::after { inset: 49px; }
+
+.dinner-content {
+  display: grid;
+  grid-template-columns: minmax(290px, .78fr) minmax(0, 1.6fr);
+  align-items: start;
+  gap: 22px;
+  margin-top: 22px;
+}
+
+.signup-card,
+.menu-board {
+  border: 1px solid #e7e2d6;
+  border-radius: 18px;
+  background: #fffefa;
+  box-shadow: 0 8px 24px rgba(46, 54, 43, .045);
+}
+
+.signup-card { padding: 27px 27px 24px; }
+
+.section-kicker { color: #a6754e; }
+
+.signup-card h2,
+.menu-board h2 {
+  margin: 7px 0 0;
+  color: #263a31;
+  font-size: 29px;
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+
+.card-intro,
+.board-toolbar p,
+.category-description,
+.board-footnote,
+.form-footnote {
+  color: #74776d;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.card-intro {
+  margin: 7px 0 22px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.form-field { margin: 0 0 15px; }
+
+.form-field > label {
+  display: block;
+  margin-bottom: 6px;
+  color: #3b493f;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.optional-label {
+  margin-left: 5px;
+  color: #9c9a8e;
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.anvil-role-dinner-input {
+  width: 100%;
+  border: 1px solid #dddcd2;
+  border-radius: 9px;
+  background-color: #fffefa;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.anvil-role-dinner-input:focus,
+input.anvil-role-dinner-input:focus,
+textarea.anvil-role-dinner-input:focus,
+select.anvil-role-dinner-input:focus {
+  border-color: #78907a;
+  box-shadow: 0 0 0 3px rgba(102, 132, 106, .12);
+  outline: none;
+}
+
+.anvil-role-dinner-notes { min-height: 83px; }
+
+.anvil-role-dinner-submit > button {
+  width: 100%;
+  min-height: 45px;
+  border: 0;
+  border-radius: 9px;
+  color: #fffefa;
+  background: #b56548;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.anvil-role-dinner-submit > button:hover {
+  background: #9f5239;
+  transform: translateY(-1px);
+}
+
+.anvil-role-form-message {
+  display: block;
+  margin: 0 0 12px;
+  color: #8c4e38;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.form-footnote {
+  margin: 11px 0 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.menu-board { padding: 26px; }
+
+.board-heading,
+.board-toolbar,
+.category-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.guest-total {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: #858479;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.anvil-role-total-number {
+  color: #29483d;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 27px;
+}
+
+.board-toolbar {
+  margin: 11px 0 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eeeadf;
+}
+
+.board-toolbar p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.anvil-role-refresh-button > button {
+  padding: 6px 10px;
+  border: 1px solid #deded1;
+  border-radius: 7px;
+  color: #536957;
+  background: transparent;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.anvil-role-refresh-button > button:hover {
+  background: #eff2e9;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 11px;
+}
+
+.category-card {
+  min-width: 0;
+  padding: 15px 13px 14px;
+  border: 1px solid #e6e8dc;
+  border-radius: 12px;
+  background: #f8f8f1;
+}
+
+.category-drinks { background: #f4f8f6; border-color: #e0eae5; }
+.category-sweet { background: #fbf5ef; border-color: #efe4d8; }
+
+.category-icon { font-size: 20px; }
+
+.anvil-role-category-count {
+  color: #777d70;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.category-card h3 {
+  margin: 10px 0 4px;
+  color: #2f4035;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.category-description {
+  min-height: 58px;
+  margin: 0 0 12px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.anvil-role-empty-message {
+  display: block;
+  padding: 9px 8px;
+  border: 1px dashed #d9dcd0;
+  border-radius: 7px;
+  color: #8b8d82;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.signup-entry {
+  margin: 0 0 7px;
+  padding: 9px 8px;
+  border: 1px solid #e6e6dc;
+  border-radius: 7px;
+  background: rgba(255, 255, 252, .86);
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.anvil-role-signup-person,
+.anvil-role-signup-dish,
+.anvil-role-signup-notes { display: block; }
+
+.anvil-role-signup-person { color: #777d70; font-size: 9px; font-weight: 600; }
+.anvil-role-signup-dish { margin-top: 2px; color: #34483b; font-size: 12px; font-weight: 600; line-height: 1.35; }
+.anvil-role-signup-notes { margin-top: 4px; color: #8c684e; font-size: 10px; line-height: 1.35; }
+
+.board-footnote {
+  margin: 14px 0 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.dinner-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 17px 4px 0;
+  color: #87877a;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+}
+
+.dinner-footer > span:first-child { font-size: 9px; }
+.dinner-footer b { margin-left: 4px; color: #b56548; }
+
+@media (max-width: 960px) {
+  .dinner-content { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .category-grid { grid-template-columns: 1fr; }
+  .category-description { min-height: 0; }
+}
+
+@media (max-width: 700px) {
+  .dinner-app { padding: 14px 12px 18px; }
+  .dinner-hero { padding: 31px 24px 28px; border-radius: 16px; }
+  .dinner-hero h1 { font-size: clamp(35px, 10vw, 48px); }
+  .hero-copy { font-size: 13px; }
+  .hero-note { align-items: flex-start; flex-wrap: wrap; border-radius: 12px; font-size: 10px; }
+  .hero-sun { top: -80px; right: -140px; width: 280px; height: 280px; }
+  .dinner-content { grid-template-columns: 1fr; gap: 14px; margin-top: 14px; }
+  .signup-card, .menu-board { padding: 21px 18px; }
+  .category-grid { grid-template-columns: 1fr; }
+  .category-card { padding: 15px; }
+  .category-description { min-height: 0; }
+  .dinner-footer { flex-direction: column; gap: 6px; }
+}
+
 .nav-holder {
   flex: 1;
 }

@@ -1,0 +1,92 @@
+<div class="dinner-app">
+  <main class="dinner-shell">
+    <header class="dinner-hero">
+      <div class="dinner-eyebrow"><span class="eyebrow-dot"></span> CENA CONDIVISA</div>
+      <h1>La tavola è più bella<br>quando è di tutti.</h1>
+      <p class="hero-copy">Ciao a tutt! Per sabato saremo circa 20: scegli una portata e aiutaci a costruire un menu vario, inclusivo e senza quindici dolci.</p>
+      <div class="hero-note"><span>🍽️</span> Un piatto per circa 5 persone <span class="hero-divider">·</span> note utili per tutti</div>
+      <div class="hero-sun" aria-hidden="true"></div>
+    </header>
+
+    <div class="dinner-content">
+      <section class="signup-card">
+        <div class="section-kicker">IL TUO POSTO A TAVOLA</div>
+        <h2>Che cosa porti?</h2>
+        <p class="card-intro">Segna il tuo nome, scegli una categoria e raccontaci il piatto.</p>
+
+        <div class="form-field">
+          <label>Il tuo nome</label>
+          <anvil-component type="TextBox" name="name_box" prop:placeholder="Es. Giulia Rossi" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Categoria</label>
+          <anvil-component type="DropDown" name="category_dropdown" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Nome del piatto</label>
+          <anvil-component type="TextBox" name="dish_box" prop:placeholder="Es. torta salata alle verdure" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Note per chi mangia <span class="optional-label">FACOLTATIVE</span></label>
+          <anvil-component type="TextArea" name="notes_box" prop:placeholder="Es. vegetariano, senza lattosio, contiene frutta a guscio…" prop:role="dinner-input dinner-notes"></anvil-component>
+        </div>
+
+        <anvil-component type="Label" name="form_message" prop:text="" prop:visible="false" prop:role="form-message"></anvil-component>
+        <anvil-component type="Button" name="submit_button" prop:text="Aggiungi alla tavola  →" prop:role="dinner-submit"></anvil-component>
+        <p class="form-footnote">Una portata a persona. Se usi lo stesso nome già inserito, la nuova scelta aggiorna quella precedente.</p>
+      </section>
+
+      <section class="menu-board">
+        <div class="board-heading">
+          <div>
+            <div class="section-kicker">IL MENU SI COMPONE</div>
+            <h2>Già in tavola</h2>
+          </div>
+          <div class="guest-total"><anvil-component type="Label" name="total_count" prop:text="0" prop:role="total-number"></anvil-component><span>portate</span></div>
+        </div>
+        <div class="board-toolbar">
+          <p>Grazie per ogni contributo, grande o piccolo.</p>
+          <anvil-component type="Button" name="refresh_button" prop:text="↻  Aggiorna" prop:role="refresh-button"></anvil-component>
+        </div>
+
+        <div class="category-grid">
+          <article class="category-card category-savory">
+            <div class="category-topline">
+              <span class="category-icon">🥗</span>
+              <anvil-component type="Label" name="salato_count" prop:text="0 / 9 adesioni" prop:role="category-count"></anvil-component>
+            </div>
+            <h3>Salato</h3>
+            <p class="category-description">Puntiamo a 8–9 piatti, con qualche opzione vegetariana, vegana e senza lattosio.</p>
+            <anvil-component type="Label" name="salato_empty" prop:text="Ancora nessuno: puoi essere il primo!" prop:role="empty-message"></anvil-component>
+            <anvil-component type="RepeatingPanel" name="salato_panel" prop:item_template="Form1.SignupItem" prop:role="signup-list"></anvil-component>
+          </article>
+
+          <article class="category-card category-drinks">
+            <div class="category-topline">
+              <span class="category-icon">🥤</span>
+              <anvil-component type="Label" name="bibite_count" prop:text="0 / 6 adesioni" prop:role="category-count"></anvil-component>
+            </div>
+            <h3>Bibite &amp; snack</h3>
+            <p class="category-description">Servono circa 5–6 contributi tra succhi, bibite, vino o stuzzichini.</p>
+            <anvil-component type="Label" name="bibite_empty" prop:text="Ancora nessuno: puoi essere il primo!" prop:role="empty-message"></anvil-component>
+            <anvil-component type="RepeatingPanel" name="bibite_panel" prop:item_template="Form1.SignupItem" prop:role="signup-list"></anvil-component>
+          </article>
+
+          <article class="category-card category-sweet">
+            <div class="category-topline">
+              <span class="category-icon">🍰</span>
+              <anvil-component type="Label" name="dolce_count" prop:text="0 / 6 adesioni" prop:role="category-count"></anvil-component>
+            </div>
+            <h3>Dolce / frutta</h3>
+            <p class="category-description">Circa 5–6 proposte. Per favore, niente kiwi: c'è un'allergia.</p>
+            <anvil-component type="Label" name="dolce_empty" prop:text="Ancora nessuno: puoi essere il primo!" prop:role="empty-message"></anvil-component>
+            <anvil-component type="RepeatingPanel" name="dolce_panel" prop:item_template="Form1.SignupItem" prop:role="signup-list"></anvil-component>
+          </article>
+        </div>
+        <p class="board-footnote">Le quantità sono indicative: ogni piatto dovrebbe bastare per circa 5 persone.</p>
+      </section>
+    </div>
+
+    <footer class="dinner-footer"><span>FATTO CON CURA, CONDIVISO CON TUTTI</span><span>Ci vediamo a tavola <b>✳</b></span></footer>
+  </main>
+</div>

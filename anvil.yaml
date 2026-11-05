@@ -1,4 +1,14 @@
 allow_embedding: false
+db_schema:
+  meal_signups:
+    client: none
+    columns:
+    - {name: name, type: string}
+    - {name: category, type: string}
+    - {name: dish, type: string}
+    - {name: notes, type: string}
+    server: full
+    title: Adesioni alla cena
 dependencies: []
 name: M3 App 1
 package_name: M3_App
