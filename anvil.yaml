@@ -20,8 +20,8 @@ db_schema:
     server: full
     title: Adesioni alla cena
 dependencies: []
-metadata: {description: Cibo in condivisione, logo_img: 'asset:Screenshot 2026-11-05 at 22-23-26 COME CUCINAVANO I COWBOY SEMPLICE COL DUTCH OVEN.png', title: ''}
-name: Cosa porto per cena?
+metadata: {description: Cibo in condivisione, logo_img: 'asset:Screenshot 2026-11-05 at 22-23-26 COME CUCINAVANO I COWBOY SEMPLICE COL DUTCH OVEN.png', title: 'Cosa porto?'}
+name: Cosa porto?
 package_name: M3_App
 renamed: true
 runtime_options:
