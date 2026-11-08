@@ -1,14 +1,15 @@
 <div class="dinner-app">
   <main class="dinner-shell">
-    <header class="dinner-hero">
+    <header anvil:name="event_hero" class="dinner-hero" visible="false">
       <div class="dinner-eyebrow"><span class="eyebrow-dot"></span> CENA CONDIVISA</div>
+      <anvil-component type="Button" name="back_to_events_button" prop:text="← Tutti gli eventi" prop:role="back-to-events-button"></anvil-component>
       <h1><anvil-component type="Label" name="event_title" prop:text="Scegli un evento" prop:role="hero-title"></anvil-component></h1>
       <p class="hero-copy"><anvil-component type="Label" name="event_description" prop:text="Crea un evento o seleziona una condivisione dalla lista."></anvil-component></p>
       <div class="hero-note"><span>📅</span> <anvil-component type="Label" name="event_date_label" prop:text="" prop:role="hero-meta"></anvil-component><anvil-component type="Label" name="event_location_label" prop:text="" prop:visible="false" prop:role="hero-meta"></anvil-component></div>
       <div aria-hidden="true" class="hero-sun"></div>
     </header>
 
-    <section class="events-board">
+    <section anvil:name="events_board" class="events-board">
       <div class="events-heading">
         <div>
           <div class="section-kicker">TUTTE LE CONDIVISIONI</div>

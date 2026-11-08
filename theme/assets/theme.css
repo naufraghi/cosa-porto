@@ -537,6 +537,23 @@ color: %color:On Primary Container%;
   background: #eaf0e8;
 }
 
+.anvil-role-back-to-events-button > button {
+  min-height: 34px;
+  margin-top: 18px;
+  padding: 6px 10px;
+  border: 1px solid rgba(244, 241, 233, .35);
+  border-radius: 8px;
+  color: #f2ead5;
+  background: transparent;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+}
+
+.anvil-role-back-to-events-button > button:hover {
+  background: rgba(244, 241, 233, .1);
+  color: #fffefa;
+}
+
 .anvil-role-events-empty {
   display: block;
   padding: 14px;

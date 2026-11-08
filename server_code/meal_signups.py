@@ -1,4 +1,6 @@
 from datetime import date
+import re
+import unicodedata
 
 import anvil.server
 import anvil.tables
@@ -9,7 +11,6 @@ CATEGORIES = {"salato", "bibite", "dolce"}
 LEGACY_EVENT_TITLE = "Bivacco percorso senior 2026"
 
 
-@anvil.tables.in_transaction
 def _attach_legacy_signups():
   unassigned = [
     row for row in app_tables.meal_signups.search(query.fetch_only("event"))
@@ -36,12 +37,52 @@ def _attach_legacy_signups():
     row["event"] = legacy_event
 
 
+def _slug_base(title):
+  normalized = unicodedata.normalize("NFKD", title)
+  ascii_title = normalized.encode("ascii", "ignore").decode("ascii").lower()
+  return re.sub(r"[^a-z0-9]+", "-", ascii_title).strip("-") or "evento"
+
+
+def _ensure_event_slugs():
+  used_slugs = set()
+  events = app_tables.events.search(query.fetch_only("title", "slug"))
+
+  for event in events:
+    slug = event["slug"]
+    if isinstance(slug, str) and slug and slug not in used_slugs:
+      used_slugs.add(slug)
+      continue
+
+    base = _slug_base(event["title"] or "")
+    slug = base
+    suffix = 2
+    while slug in used_slugs:
+      slug = "{}-{}".format(base, suffix)
+      suffix += 1
+    event["slug"] = slug
+    used_slugs.add(slug)
+
+  return used_slugs
+
+
+def _next_event_slug(title, used_slugs):
+  base = _slug_base(title)
+  slug = base
+  suffix = 2
+  while slug in used_slugs:
+    slug = "{}-{}".format(base, suffix)
+    suffix += 1
+  return slug
+
+
 @anvil.server.callable
+@anvil.tables.in_transaction
 def get_upcoming_events():
   _attach_legacy_signups()
+  _ensure_event_slugs()
   today = date.today()
   events = list(app_tables.events.search(
-    query.fetch_only("title", "event_date", "location", "description")
+    query.fetch_only("title", "event_date", "location", "description", "slug")
   ))
   upcoming = [
     event for event in events
@@ -55,6 +96,19 @@ def get_upcoming_events():
       event["title"].casefold(),
     ),
   )
+
+
+@anvil.server.callable
+@anvil.tables.in_transaction
+def get_event_by_slug(slug):
+  if not isinstance(slug, str) or not slug:
+    return None
+
+  _attach_legacy_signups()
+  _ensure_event_slugs()
+  for event in app_tables.events.search(slug=slug):
+    return event
+  return None
 
 
 def _find_event(event_id):
@@ -75,6 +129,7 @@ def get_meal_signups(event_id):
 
 
 @anvil.server.callable
+@anvil.tables.in_transaction
 def create_meal_event(title, event_date, location="", description=""):
   if not all(isinstance(value, str) for value in (title, location, description)):
     return {"ok": False, "message": "Controlla i dati inseriti e riprova."}
@@ -96,11 +151,14 @@ def create_meal_event(title, event_date, location="", description=""):
   if len(description) > 1000:
     return {"ok": False, "message": "La descrizione può contenere al massimo 1000 caratteri."}
 
+  used_slugs = _ensure_event_slugs()
+  slug = _next_event_slug(title, used_slugs)
   event = app_tables.events.add_row(
     title=title,
     event_date=event_date,
     location=location,
     description=description,
+    slug=slug,
   )
   return {"ok": True, "event": event}
 

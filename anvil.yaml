@@ -7,6 +7,7 @@ db_schema:
     - {name: event_date, type: date}
     - {name: location, type: string}
     - {name: description, type: string}
+    - {name: slug, type: string}
     server: full
     title: Eventi
   meal_signups:

@@ -1,4 +1,5 @@
-from anvil import handle, server
+from anvil import get_url_hash, handle, server, set_url_hash
+from anvil.js.window import window
 
 from ._anvil_designer import Form1Template
 
@@ -21,40 +22,62 @@ class Form1(Form1Template):
     self.category_dropdown.selected_value = "salato"
     self.selected_event = None
     self._events = []
+    self._signups = []
+    self.events_board.visible = True
+    self.event_hero.visible = False
+    self.event_detail.visible = False
     self.event_create_panel.visible = False
     self._load_events()
+    window.addEventListener("hashchange", self._handle_hash_change)
+    self._route_from_hash()
 
-  def _load_events(self, selected_event_id=None):
+  def _load_events(self):
     self._events = server.call("get_upcoming_events")
     self.events_panel.items = self._events
     self.events_empty.visible = not self._events
 
-    if selected_event_id is None and self.selected_event is not None:
-      selected_event_id = self.selected_event.get_id()
+  def _slug_from_url_hash(self):
+    url_hash = get_url_hash()
+    if isinstance(url_hash, dict):
+      slug = url_hash.get("evento") or url_hash.get("event")
+    else:
+      slug = url_hash
+    return slug.strip("/") if isinstance(slug, str) else ""
 
-    selected_event = None
-    if selected_event_id is not None:
-      selected_event = next(
-        (event for event in self._events if event.get_id() == selected_event_id),
-        None,
-      )
-    if selected_event is None and self._events:
-      selected_event = self._events[0]
+  def _handle_hash_change(self, event):
+    self._route_from_hash()
 
-    self._select_event(selected_event)
+  def _route_from_hash(self):
+    slug = self._slug_from_url_hash()
+    if not slug:
+      self._show_event_list()
+      return
+
+    event = server.call("get_event_by_slug", slug)
+    if event is None:
+      set_url_hash("")
+      self._show_event_list()
+      return
+    self._select_event(event)
+
+  def _show_event_list(self):
+    self.selected_event = None
+    self.events_board.visible = True
+    self.event_hero.visible = False
+    self.event_detail.visible = False
+    self._show_message("")
 
   def _select_event(self, event):
     self.selected_event = event
-    self.event_detail.visible = event is not None
     if event is None:
-      self.event_title.text = "Scegli un evento"
-      self.event_description.text = "Crea un evento o seleziona una condivisione dalla lista."
-      self.event_date_label.visible = False
-      self.event_location_label.visible = False
       self._signups = []
       self._show_signups()
+      self._show_event_list()
       return
 
+    self.events_board.visible = False
+    self.event_hero.visible = True
+    self.event_detail.visible = True
     self.event_title.text = event["title"]
     description = event["description"] or ""
     self.event_description.text = description or "Ogni evento ha la sua lista di portate condivise."
@@ -103,7 +126,11 @@ class Form1(Form1Template):
 
   @handle("events_panel", "x-select-event")
   def events_panel_select_event(self, selected_event, **event_args):
-    self._select_event(selected_event)
+    set_url_hash("/" + selected_event["slug"])
+
+  @handle("back_to_events_button", "click")
+  def back_to_events_button_click(self, **event_args):
+    set_url_hash("")
 
   @handle("toggle_create_event_button", "click")
   def toggle_create_event_button_click(self, **event_args):
@@ -136,7 +163,6 @@ class Form1(Form1Template):
         self._show_event_message(result["message"])
         return
 
-      created_event_id = result["event"].get_id()
       self.event_title_box.text = ""
       self.event_date_picker.date = None
       self.event_location_box.text = ""
@@ -144,7 +170,8 @@ class Form1(Form1Template):
       self.event_create_panel.visible = False
       self.toggle_create_event_button.text = "+ Crea un evento"
       self._show_event_message("")
-      self._load_events(selected_event_id=created_event_id)
+      self._load_events()
+      self._show_event_list()
     finally:
       self.create_event_button.enabled = True
 
