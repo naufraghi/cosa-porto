@@ -1,5 +1,24 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" rel="preload" as="font" crossorigin="anonymous">
 
+<style>
+  .event-create-panel input::placeholder,
+  .event-create-panel textarea::placeholder {
+    color: #9c9a8e;
+    opacity: 1;
+  }
+
+  .event-create-panel input::-webkit-input-placeholder,
+  .event-create-panel textarea::-webkit-input-placeholder {
+    color: #9c9a8e;
+  }
+
+  .event-create-panel input::-moz-placeholder,
+  .event-create-panel textarea::-moz-placeholder {
+    color: #9c9a8e;
+    opacity: 1;
+  }
+</style>
+
 <div class="structure">
   <div class="app-bar" anvil-drop-container=".anvil-container" anvil-drop-redirect=".placeholder">
     <a class="sidebar-toggle" anvil-if-slot-empty="top-left-btn" anvil-hide-if-slot-empty="left-nav" anvil-drop-slot="top-left-btn" href="javascript:void(0)"><i class="fa fa-bars"></i></a>
