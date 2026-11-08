@@ -8,33 +8,6 @@ from anvil.tables import app_tables, query
 
 
 CATEGORIES = {"salato", "bibite", "dolce"}
-LEGACY_EVENT_TITLE = "Bivacco percorso senior 2026"
-
-
-def _attach_legacy_signups():
-  unassigned = [
-    row for row in app_tables.meal_signups.search(query.fetch_only("event"))
-    if row["event"] is None
-  ]
-  if not unassigned:
-    return
-
-  legacy_events = list(app_tables.events.search(
-    query.fetch_only("title", "event_date", "location", "description"),
-    title=LEGACY_EVENT_TITLE,
-  ))
-  if legacy_events:
-    legacy_event = legacy_events[0]
-  else:
-    legacy_event = app_tables.events.add_row(
-      title=LEGACY_EVENT_TITLE,
-      event_date=None,
-      location="",
-      description="Evento preesistente, migrato dalla lista condivisa.",
-    )
-
-  for row in unassigned:
-    row["event"] = legacy_event
 
 
 def _slug_base(title):
@@ -78,7 +51,6 @@ def _next_event_slug(title, used_slugs):
 @anvil.server.callable
 @anvil.tables.in_transaction
 def get_upcoming_events():
-  _attach_legacy_signups()
   _ensure_event_slugs()
   today = date.today()
   events = list(app_tables.events.search(
@@ -104,7 +76,6 @@ def get_event_by_slug(slug):
   if not isinstance(slug, str) or not slug:
     return None
 
-  _attach_legacy_signups()
   _ensure_event_slugs()
   for event in app_tables.events.search(slug=slug):
     return event
