@@ -532,6 +532,31 @@ color: %color:On Primary Container%;
   font-weight: 600;
 }
 
+.edit-link-panel {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin-top: 14px;
+  padding: 13px 15px 1px;
+  border: 1px solid rgba(244, 241, 233, .24);
+  border-radius: 10px;
+  background: rgba(16, 34, 26, .28);
+}
+
+.edit-link-panel .section-kicker {
+  color: #e4ad76;
+}
+
+.edit-link-panel p {
+  margin: 6px 0 11px;
+  color: #e1e6dc;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.edit-link-panel .form-field { margin-bottom: 12px; }
+
 .anvil-role-create-event-toggle > button:hover,
 .anvil-role-event-card-button > button:hover {
   background: #eaf0e8;

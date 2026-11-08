@@ -8,6 +8,7 @@ db_schema:
     - {name: location, type: string}
     - {name: description, type: string}
     - {name: slug, type: string}
+    - {name: edit_token_hash, type: string}
     server: full
     title: Eventi
   meal_signups:

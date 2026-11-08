@@ -1,5 +1,8 @@
 from datetime import date
+import hashlib
+import hmac
 import re
+import secrets
 import unicodedata
 
 import anvil.server
@@ -60,7 +63,7 @@ def get_upcoming_events():
     event for event in events
     if event["event_date"] is None or event["event_date"] >= today
   ]
-  return sorted(
+  upcoming = sorted(
     upcoming,
     key=lambda event: (
       event["event_date"] is None,
@@ -68,6 +71,7 @@ def get_upcoming_events():
       event["title"].casefold(),
     ),
   )
+  return [_public_event_data(event) for event in upcoming]
 
 
 @anvil.server.callable
@@ -77,8 +81,11 @@ def get_event_by_slug(slug):
     return None
 
   _ensure_event_slugs()
-  for event in app_tables.events.search(slug=slug):
-    return event
+  for event in app_tables.events.search(
+    query.fetch_only("title", "event_date", "location", "description", "slug"),
+    slug=slug,
+  ):
+    return _public_event_data(event)
   return None
 
 
@@ -86,6 +93,44 @@ def _find_event(event_id):
   if not isinstance(event_id, str) or not event_id:
     return None
   return app_tables.events.get_by_id(event_id)
+
+
+def _public_event_data(event):
+  return {
+    "id": event.get_id(),
+    "title": event["title"],
+    "event_date": event["event_date"],
+    "location": event["location"],
+    "description": event["description"],
+    "slug": event["slug"],
+  }
+
+
+def _hash_edit_token(token):
+  return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _is_valid_edit_token(event, token):
+  stored_hash = event["edit_token_hash"]
+  if not isinstance(token, str) or not token or not isinstance(stored_hash, str):
+    return False
+  return hmac.compare_digest(stored_hash, _hash_edit_token(token))
+
+
+def _validate_event_fields(title, event_date, location, description):
+  if not title:
+    return "Inserisci il nome dell'evento."
+  if len(title) > 120:
+    return "Il nome può contenere al massimo 120 caratteri."
+  if not isinstance(event_date, date):
+    return "Scegli la data dell'evento."
+  if event_date < date.today():
+    return "La data deve essere oggi o successiva."
+  if len(location) > 120:
+    return "Il luogo può contenere al massimo 120 caratteri."
+  if len(description) > 1000:
+    return "La descrizione può contenere al massimo 1000 caratteri."
+  return None
 
 
 @anvil.server.callable
@@ -109,29 +154,72 @@ def create_meal_event(title, event_date, location="", description=""):
   location = location.strip()
   description = description.strip()
 
-  if not title:
-    return {"ok": False, "message": "Inserisci il nome dell'evento."}
-  if len(title) > 120:
-    return {"ok": False, "message": "Il nome può contenere al massimo 120 caratteri."}
-  if not isinstance(event_date, date):
-    return {"ok": False, "message": "Scegli la data dell'evento."}
-  if event_date < date.today():
-    return {"ok": False, "message": "La data deve essere oggi o successiva."}
-  if len(location) > 120:
-    return {"ok": False, "message": "Il luogo può contenere al massimo 120 caratteri."}
-  if len(description) > 1000:
-    return {"ok": False, "message": "La descrizione può contenere al massimo 1000 caratteri."}
+  validation_message = _validate_event_fields(
+    title, event_date, location, description
+  )
+  if validation_message:
+    return {"ok": False, "message": validation_message}
 
   used_slugs = _ensure_event_slugs()
   slug = _next_event_slug(title, used_slugs)
+  edit_token = secrets.token_urlsafe(32)
   event = app_tables.events.add_row(
     title=title,
     event_date=event_date,
     location=location,
     description=description,
     slug=slug,
+    edit_token_hash=_hash_edit_token(edit_token),
   )
-  return {"ok": True, "event": event}
+  return {"ok": True, "slug": slug, "edit_token": edit_token}
+
+
+@anvil.server.callable
+def can_edit_meal_event(event_id, edit_token):
+  event = _find_event(event_id)
+  return event is not None and _is_valid_edit_token(event, edit_token)
+
+
+@anvil.server.callable
+@anvil.tables.in_transaction
+def update_meal_event(
+  event_id, edit_token, title, event_date, location="", description=""
+):
+  event = _find_event(event_id)
+  if event is None or not _is_valid_edit_token(event, edit_token):
+    return {"ok": False, "message": "Link di modifica non valido o revocato."}
+
+  if not all(isinstance(value, str) for value in (title, location, description)):
+    return {"ok": False, "message": "Controlla i dati inseriti e riprova."}
+
+  title = title.strip()
+  location = location.strip()
+  description = description.strip()
+  validation_message = _validate_event_fields(
+    title, event_date, location, description
+  )
+  if validation_message:
+    return {"ok": False, "message": validation_message}
+
+  event.update(
+    title=title,
+    event_date=event_date,
+    location=location,
+    description=description,
+  )
+  return {"ok": True, "slug": event["slug"]}
+
+
+@anvil.server.callable
+@anvil.tables.in_transaction
+def rotate_meal_event_edit_token(event_id, edit_token):
+  event = _find_event(event_id)
+  if event is None or not _is_valid_edit_token(event, edit_token):
+    return {"ok": False, "message": "Link di modifica non valido o revocato."}
+
+  new_edit_token = secrets.token_urlsafe(32)
+  event["edit_token_hash"] = _hash_edit_token(new_edit_token)
+  return {"ok": True, "edit_token": new_edit_token}
 
 
 @anvil.server.callable

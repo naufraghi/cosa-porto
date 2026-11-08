@@ -3,9 +3,20 @@
     <header anvil:name="event_hero" class="dinner-hero" visible="false">
       <div class="dinner-eyebrow"><span class="eyebrow-dot"></span> CENA CONDIVISA</div>
       <anvil-component type="Button" name="back_to_events_button" prop:text="← Tutti gli eventi" prop:role="back-to-events-button"></anvil-component>
+      <anvil-component type="Button" name="edit_event_button" prop:text="Modifica evento" prop:visible="false" prop:role="create-event-toggle"></anvil-component>
+      <anvil-component type="Button" name="rotate_edit_link_button" prop:text="Rigenera link privato" prop:visible="false" prop:role="create-event-toggle"></anvil-component>
       <h1><anvil-component type="Label" name="event_title" prop:text="Scegli un evento" prop:role="hero-title"></anvil-component></h1>
       <p class="hero-copy"><anvil-component type="Label" name="event_description" prop:text="Crea un evento o seleziona una condivisione dalla lista."></anvil-component></p>
       <div class="hero-note"><span>📅</span> <anvil-component type="Label" name="event_date_label" prop:text="" prop:role="hero-meta"></anvil-component><anvil-component type="Label" name="event_location_label" prop:text="" prop:visible="false" prop:role="hero-meta"></anvil-component></div>
+      <div anvil:name="edit_link_panel" class="edit-link-panel" visible="false">
+        <div class="section-kicker">LINK PRIVATO DI MODIFICA</div>
+        <p>Conserva questo indirizzo: chiunque lo possieda può modificare l'evento.</p>
+        <div class="form-field">
+          <label>Link da copiare e conservare</label>
+          <anvil-component type="TextBox" name="event_edit_link_box" prop:role="dinner-input"></anvil-component>
+        </div>
+      </div>
+      <anvil-component type="Label" name="event_edit_access_message" prop:text="" prop:visible="false" prop:role="hero-copy"></anvil-component>
       <div aria-hidden="true" class="hero-sun"></div>
     </header>
 
@@ -47,6 +58,30 @@
     </section>
 
     <div anvil:name="event_detail" class="event-detail" visible="false">
+    <div anvil:name="event_edit_panel" class="event-create-panel" visible="false">
+      <div class="section-kicker">MODIFICA EVENTO</div>
+      <div class="event-form-grid">
+        <div class="form-field">
+          <label>Nome dell'evento</label>
+          <anvil-component type="TextBox" name="edit_event_title_box" prop:placeholder="Es. Cena di primavera" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Data</label>
+          <anvil-component type="DatePicker" name="edit_event_date_picker" prop:placeholder="Scegli una data" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Luogo <span class="optional-label">FACOLTATIVO</span></label>
+          <anvil-component type="TextBox" name="edit_event_location_box" prop:placeholder="Es. Casa scout" prop:role="dinner-input"></anvil-component>
+        </div>
+        <div class="form-field">
+          <label>Descrizione <span class="optional-label">FACOLTATIVA</span></label>
+          <anvil-component type="TextArea" name="edit_event_description_box" prop:placeholder="Aggiungi qualche dettaglio per chi partecipa" prop:role="dinner-input dinner-notes"></anvil-component>
+        </div>
+      </div>
+      <anvil-component type="Label" name="event_edit_message" prop:text="" prop:visible="false" prop:role="form-message"></anvil-component>
+      <anvil-component type="Button" name="save_event_changes_button" prop:text="Salva modifiche" prop:role="dinner-submit"></anvil-component>
+      <anvil-component type="Button" name="cancel_event_edit_button" prop:text="Annulla" prop:role="event-card-button"></anvil-component>
+    </div>
     <div class="dinner-content">
       <section class="signup-card">
         <div class="section-kicker">IL TUO POSTO A TAVOLA</div>
