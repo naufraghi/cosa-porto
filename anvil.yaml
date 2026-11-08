@@ -1,5 +1,14 @@
 allow_embedding: false
 db_schema:
+  events:
+    client: none
+    columns:
+    - {name: title, type: string}
+    - {name: event_date, type: date}
+    - {name: location, type: string}
+    - {name: description, type: string}
+    server: full
+    title: Eventi
   meal_signups:
     client: none
     columns:
@@ -7,6 +16,7 @@ db_schema:
     - {name: category, type: string}
     - {name: dish, type: string}
     - {name: notes, type: string}
+    - {name: event, target: events, type: link_single}
     server: full
     title: Adesioni alla cena
 dependencies: []

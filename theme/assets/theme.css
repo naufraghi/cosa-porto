@@ -446,6 +446,16 @@ color: %color:On Primary Container%;
   letter-spacing: -.035em;
 }
 
+.anvil-role-hero-title {
+  display: block;
+  color: #f8f5eb;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -.035em;
+}
+
 .hero-copy {
   position: relative;
   z-index: 1;
@@ -471,6 +481,135 @@ color: %color:On Primary Container%;
   font-family: Roboto, Arial, sans-serif;
   font-size: 12px;
 }
+
+.anvil-role-hero-meta {
+  color: #f2ead5;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.events-board {
+  margin-top: 22px;
+  padding: 25px 27px;
+  border: 1px solid #e7e2d6;
+  border-radius: 18px;
+  background: #fffefa;
+  box-shadow: 0 8px 24px rgba(46, 54, 43, .045);
+}
+
+.events-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.events-heading h2 {
+  margin: 7px 0 0;
+  color: #263a31;
+  font-size: 29px;
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+
+.events-intro {
+  margin: 8px 0 16px;
+  color: #74776d;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.anvil-role-create-event-toggle > button,
+.anvil-role-event-card-button > button {
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid #d9ded2;
+  border-radius: 8px;
+  color: #435b49;
+  background: #f5f6ef;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.anvil-role-create-event-toggle > button:hover,
+.anvil-role-event-card-button > button:hover {
+  background: #eaf0e8;
+}
+
+.anvil-role-events-empty {
+  display: block;
+  padding: 14px;
+  border: 1px dashed #d9dcd0;
+  border-radius: 9px;
+  color: #74776d;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.anvil-role-events-list > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 11px;
+}
+
+.event-card {
+  display: flex;
+  min-height: 142px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid #e6e8dc;
+  border-radius: 12px;
+  background: #f8f8f1;
+}
+
+.anvil-role-event-card-title,
+.anvil-role-event-card-meta,
+.anvil-role-event-card-description { display: block; }
+
+.anvil-role-event-card-title {
+  color: #2f4035;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.anvil-role-event-card-meta {
+  margin-top: 4px;
+  color: #777d70;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 10px;
+}
+
+.anvil-role-event-card-description {
+  margin-top: 7px;
+  color: #74776d;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.event-create-panel {
+  margin-top: 17px;
+  padding: 18px;
+  border: 1px solid #e6e8dc;
+  border-radius: 12px;
+  background: #f8f8f1;
+}
+
+.event-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+  margin-top: 12px;
+}
+
+.event-detail { margin-top: 22px; }
+
+.event-detail .dinner-content { margin-top: 0; }
 
 .hero-divider { color: #d3b27e; }
 
@@ -762,6 +901,11 @@ select.anvil-role-dinner-input:focus {
   .hero-note { align-items: flex-start; flex-wrap: wrap; border-radius: 12px; font-size: 10px; }
   .hero-sun { top: -80px; right: -140px; width: 280px; height: 280px; }
   .dinner-content { grid-template-columns: 1fr; gap: 14px; margin-top: 14px; }
+  .events-board { margin-top: 14px; padding: 21px 18px; }
+  .events-heading { align-items: flex-start; }
+  .events-heading h2 { font-size: 25px; }
+  .event-form-grid { grid-template-columns: 1fr; }
+  .event-detail { margin-top: 14px; }
   .signup-card, .menu-board { padding: 21px 18px; }
   .category-grid { grid-template-columns: 1fr; }
   .category-card { padding: 15px; }

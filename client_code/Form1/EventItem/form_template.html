@@ -1,0 +1,11 @@
+<anvil-form container="ColumnPanel">
+  <div class="event-card">
+    <div class="event-card-copy">
+      <anvil-component type="Label" name="event_title_label" bind:text="self.item['title']" prop:role="event-card-title"></anvil-component>
+      <anvil-component type="Label" name="event_date_label" prop:text="" prop:role="event-card-meta"></anvil-component>
+      <anvil-component type="Label" name="event_location_label" prop:text="" prop:visible="false" prop:role="event-card-meta"></anvil-component>
+      <anvil-component type="Label" name="event_description_label" prop:text="" prop:visible="false" prop:role="event-card-description"></anvil-component>
+    </div>
+    <anvil-component type="Button" name="open_event_button" prop:text="Apri condivisione →" prop:role="event-card-button"></anvil-component>
+  </div>
+</anvil-form>

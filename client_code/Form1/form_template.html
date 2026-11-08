@@ -2,12 +2,50 @@
   <main class="dinner-shell">
     <header class="dinner-hero">
       <div class="dinner-eyebrow"><span class="eyebrow-dot"></span> CENA CONDIVISA</div>
-      <h1>Bivacco percorso senior 2026</h1>
-      <p class="hero-copy">Ciao a tutt! Per sabato saremo circa 20: scegli una portata e aiutaci a costruire un menu vario, inclusivo e senza quindici dolci.</p>
-      <div class="hero-note"><span>🍽️</span> Un piatto per circa 5 persone <span class="hero-divider">·</span> (con opzioni senza lattosio, vegetariane e vegane)</div>
+      <h1><anvil-component type="Label" name="event_title" prop:text="Scegli un evento" prop:role="hero-title"></anvil-component></h1>
+      <p class="hero-copy"><anvil-component type="Label" name="event_description" prop:text="Crea un evento o seleziona una condivisione dalla lista."></anvil-component></p>
+      <div class="hero-note"><span>📅</span> <anvil-component type="Label" name="event_date_label" prop:text="" prop:role="hero-meta"></anvil-component><anvil-component type="Label" name="event_location_label" prop:text="" prop:visible="false" prop:role="hero-meta"></anvil-component></div>
       <div aria-hidden="true" class="hero-sun"></div>
     </header>
 
+    <section class="events-board">
+      <div class="events-heading">
+        <div>
+          <div class="section-kicker">TUTTE LE CONDIVISIONI</div>
+          <h2>Prossimi eventi</h2>
+        </div>
+        <anvil-component type="Button" name="toggle_create_event_button" prop:text="+ Crea un evento" prop:role="create-event-toggle"></anvil-component>
+      </div>
+      <p class="events-intro">Ogni evento ha la propria lista di portate. Apri una condivisione o crea un nuovo evento.</p>
+      <anvil-component type="Label" name="events_empty" prop:text="Non ci sono eventi in programma. Puoi crearne uno tu." prop:visible="false" prop:role="events-empty"></anvil-component>
+      <anvil-component type="RepeatingPanel" name="events_panel" prop:item_template="Form1.EventItem" prop:role="events-list"></anvil-component>
+
+      <div anvil:name="event_create_panel" class="event-create-panel" visible="false">
+        <div class="section-kicker">NUOVO EVENTO</div>
+        <div class="event-form-grid">
+          <div class="form-field">
+            <label>Nome dell'evento</label>
+            <anvil-component type="TextBox" name="event_title_box" prop:placeholder="Es. Cena di primavera" prop:role="dinner-input"></anvil-component>
+          </div>
+          <div class="form-field">
+            <label>Data</label>
+            <anvil-component type="DatePicker" name="event_date_picker" prop:placeholder="Scegli una data" prop:role="dinner-input"></anvil-component>
+          </div>
+          <div class="form-field">
+            <label>Luogo <span class="optional-label">FACOLTATIVO</span></label>
+            <anvil-component type="TextBox" name="event_location_box" prop:placeholder="Es. Casa scout" prop:role="dinner-input"></anvil-component>
+          </div>
+          <div class="form-field">
+            <label>Descrizione <span class="optional-label">FACOLTATIVA</span></label>
+            <anvil-component type="TextArea" name="event_description_box" prop:placeholder="Aggiungi qualche dettaglio per chi partecipa" prop:role="dinner-input dinner-notes"></anvil-component>
+          </div>
+        </div>
+        <anvil-component type="Label" name="event_form_message" prop:text="" prop:visible="false" prop:role="form-message"></anvil-component>
+        <anvil-component type="Button" name="create_event_button" prop:text="Crea evento" prop:role="dinner-submit"></anvil-component>
+      </div>
+    </section>
+
+    <div anvil:name="event_detail" class="event-detail" visible="false">
     <div class="dinner-content">
       <section class="signup-card">
         <div class="section-kicker">IL TUO POSTO A TAVOLA</div>
@@ -85,6 +123,7 @@
         </div>
         <p class="board-footnote">Le quantità sono indicative: ogni piatto dovrebbe bastare per circa 5 persone.</p>
       </section>
+    </div>
     </div>
 
     <footer class="dinner-footer"><span>FATTO CON CURA, CONDIVISO CON TUTTI</span><span>Ci vediamo a tavola <b>✳</b></span></footer>
